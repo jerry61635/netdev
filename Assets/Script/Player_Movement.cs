@@ -7,6 +7,9 @@ public class Player_Movement : NetworkBehaviour
 {
     public CharacterController controller;
 
+    float horizontal;
+    float vertical;
+
     float turnSmoothTime = 0.1f;
     float SmoothVelocity;
 
@@ -26,12 +29,15 @@ public class Player_Movement : NetworkBehaviour
     bool isground;
     public Transform groundCheck;
     public LayerMask ground;
+
+    void Awake()
+    {
+        //GameManager.Instance.localPlayer = this;
+    }
     void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        GameManager.Instance.FreeLook.m_Follow = gameObject.transform;
-        GameManager.Instance.FreeLook.m_LookAt = gameObject.transform;
     }
 
     // Update is called once per frame
@@ -54,9 +60,14 @@ public class Player_Movement : NetworkBehaviour
 
         isground = Physics.CheckSphere(groundCheck.position, 0.5f, ground);
 
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        if(IsClient)
+        {
+            horizontal = Input.GetAxis("Horizontal");
+            vertical = Input.GetAxis("Vertical");
+        }
+
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
+        print(horizontal + " " + vertical);
         if (direction.magnitude >= 0.1f)
         {
             float turn = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + GameManager.Instance.Cam.transform.eulerAngles.y;
@@ -79,9 +90,10 @@ public class Player_Movement : NetworkBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        if (!IsLocalPlayer)
+        if(IsLocalPlayer)
         {
-            return;
+            GameManager.Instance.FreeLook.m_LookAt = gameObject.transform;
+            GameManager.Instance.FreeLook.m_Follow = gameObject.transform;
         }
 
     }
