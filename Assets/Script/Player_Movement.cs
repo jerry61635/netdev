@@ -7,6 +7,8 @@ public class Player_Movement : NetworkBehaviour
 {
     public CharacterController controller;
 
+    float debug_frame = 0f;
+
     float horizontal;
     float vertical;
 
@@ -33,16 +35,23 @@ public class Player_Movement : NetworkBehaviour
     void Awake()
     {
         //GameManager.Instance.localPlayer = this;
+
     }
     void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        if (IsLocalPlayer)
+        {
+            GameManager.Instance.FreeLook.m_LookAt = gameObject.transform;
+            GameManager.Instance.FreeLook.m_Follow = gameObject.transform;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (Input.GetKey(KeyCode.Escape))
         {
             Cursor.visible = true;
@@ -64,11 +73,12 @@ public class Player_Movement : NetworkBehaviour
         {
             horizontal = Input.GetAxis("Horizontal");
             vertical = Input.GetAxis("Vertical");
+            //debug_frame++;
+            Debug.Log(debug_frame);
         }
 
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
-        print(horizontal + " " + vertical);
-        if (direction.magnitude >= 0.1f)
+        if (direction.magnitude >= 0.1f && IsLocalPlayer)
         {
             float turn = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + GameManager.Instance.Cam.transform.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, turn, ref SmoothVelocity, turnSmoothTime);
@@ -76,6 +86,8 @@ public class Player_Movement : NetworkBehaviour
 
             Vector3 movedir = Quaternion.Euler(0f, turn, 0f) * Vector3.forward;
             controller.Move(movedir.normalized * current_speed * Time.deltaTime);
+            print("movedir: " + movedir);
+            Debug.Log("angle: " + angle);
         }
 
         if (Input.GetButton("Jump") && isground)
@@ -90,11 +102,6 @@ public class Player_Movement : NetworkBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        if(IsLocalPlayer)
-        {
-            GameManager.Instance.FreeLook.m_LookAt = gameObject.transform;
-            GameManager.Instance.FreeLook.m_Follow = gameObject.transform;
-        }
 
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     //public event System.Action<Player_Movement> OnLocalPlayerJoin;
-    private GameObject gameObject;
+    //private GameObject gameObject;
 
     public Transform Cam;
     public Cinemachine.CinemachineFreeLook FreeLook;
