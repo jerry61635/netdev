@@ -7,7 +7,6 @@ public class Player_Movement : NetworkBehaviour
 {
     public CharacterController controller;
 
-    float debug_frame = 0f;
 
     float horizontal;
     float vertical;
@@ -32,11 +31,6 @@ public class Player_Movement : NetworkBehaviour
     public Transform groundCheck;
     public LayerMask ground;
 
-    void Awake()
-    {
-        //GameManager.Instance.localPlayer = this;
-
-    }
     void Start()
     {
         Cursor.visible = false;
@@ -73,8 +67,6 @@ public class Player_Movement : NetworkBehaviour
         {
             horizontal = Input.GetAxis("Horizontal");
             vertical = Input.GetAxis("Vertical");
-            //debug_frame++;
-            Debug.Log(debug_frame);
         }
 
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
@@ -86,8 +78,7 @@ public class Player_Movement : NetworkBehaviour
 
             Vector3 movedir = Quaternion.Euler(0f, turn, 0f) * Vector3.forward;
             controller.Move(movedir.normalized * current_speed * Time.deltaTime);
-            print("movedir: " + movedir);
-            Debug.Log("angle: " + angle);
+            //print(Mathf.Atan2(1, 0));
         }
 
         if (Input.GetButton("Jump") && isground)
