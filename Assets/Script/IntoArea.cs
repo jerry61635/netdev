@@ -15,9 +15,13 @@ public class IntoArea : MonoBehaviour
     public float SpawnRate;
     private float Current_Spawn_time = 0;
 
+    List<GameObject> enemies = new List<GameObject>();
+
+    Collider WallCollider;
+
     void Start()
     {
-        
+        WallCollider = GetComponentInChildren<Collider>();
     }
 
 
@@ -31,20 +35,32 @@ public class IntoArea : MonoBehaviour
             {
                 int enemy_ID = Random.Range(0, Enemies.Length);
                 int spawn_position = Random.Range(0, SpawnArea.Length);
-                Instantiate(Enemies[enemy_ID], SpawnArea[spawn_position].transform.position, SpawnArea[spawn_position].transform.rotation);
+                enemies.Add(Instantiate(Enemies[enemy_ID], SpawnArea[spawn_position].transform.position, SpawnArea[spawn_position].transform.rotation));
 
                 Current_Spawn_time = 0;
                 Debug.Log("Enemy Spawn! Spawn ID: " + enemy_ID);
+                
             }
         }
+        Debug.Log(enemies.Count);
+        Debug.Log(spawn_enemy);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player inside");
-            spawn_enemy = !spawn_enemy;
+            if (spawn_enemy)
+            {
+                spawn_enemy = false;
+                Debug.Log("Player Out");
+                foreach (GameObject i in enemies){
+                    Destroy(i);
+                }
+                enemies.Clear();
+            }
+            else
+                spawn_enemy = true;
         }
     }
 
