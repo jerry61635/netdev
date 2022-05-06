@@ -38,30 +38,28 @@ public class IntoArea : MonoBehaviour
 
                 Current_Spawn_time = 0;
                 Debug.Log("Enemy Spawn! Spawn ID: " + enemy_ID);
-                
             }
         }
+        else{
+            foreach (GameObject i in enemies){
+                Destroy(i);
+            }
+            enemies.Clear();
+        }
     }
-
-    void LateUpdate()
+    void OnTriggerExit(Collider other)
     {
-        spawn_enemy = false;
+        if(other.CompareTag("Player")){
+            Debug.Log("Out");
+            spawn_enemy = false;
+        }
     }
     
     void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (spawn_enemy)
-            {
-                spawn_enemy = false;
-                foreach (GameObject i in enemies){
-                    Destroy(i);
-                }
-                enemies.Clear();
-            }
-            else
-                spawn_enemy = true;
+            spawn_enemy = true;
         }
     }
 

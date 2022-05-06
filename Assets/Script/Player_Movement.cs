@@ -32,6 +32,7 @@ public class Player_Movement : NetworkBehaviour
     public float maxDashTime = 2;
     public float dashStopSpeed = 0.1f;
     public float dashSpeed = 100f;
+    float dashCooldown;
 
 
     [SerializeField]
@@ -83,7 +84,6 @@ public class Player_Movement : NetworkBehaviour
             current_speed = runningSpeed;
         else if((Mathf.Abs(horizontal) != 1 || Mathf.Abs(vertical) != 1))
             runTime = 0;
-        Debug.Log(runTime);
         isground = Physics.CheckSphere(groundCheck.position, 0.5f, ground);
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
         if (direction.magnitude >= 0.1f && IsLocalPlayer)
