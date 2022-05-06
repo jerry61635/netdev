@@ -7,9 +7,11 @@ public class Player_Movement : NetworkBehaviour
 {
     public CharacterController controller;
 
-
     float horizontal;
     float vertical;
+    bool jump;
+    bool dash;
+    bool pause;
 
     float turnSmoothTime = 0.1f;
     float SmoothVelocity;
@@ -22,6 +24,15 @@ public class Player_Movement : NetworkBehaviour
 
     [SerializeField]
     float runningSpeed = 8f;
+    public float autoRuntime = 2f;
+    float runTime = 0f;
+    float current_speed;
+
+    float currentDashTime;
+    public float maxDashTime = 2;
+    public float dashStopSpeed = 0.1f;
+    public float dashSpeed = 100f;
+
 
     [SerializeField]
     float gravity = -9.8f;
@@ -41,34 +52,39 @@ public class Player_Movement : NetworkBehaviour
             GameManager.Instance.FreeLook.m_Follow = gameObject.transform;
         }
     }
-
     // Update is called once per frame
     void Update()
     {
-        
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
-        float current_speed;
-        if (Input.GetKey("left shift"))
-        {
-            current_speed = runningSpeed;
-        }
-        else
-        {
-            current_speed = speed;
-        }
-
-        isground = Physics.CheckSphere(groundCheck.position, 0.5f, ground);
-
         if(IsClient)
         {
             horizontal = Input.GetAxis("Horizontal");
             vertical = Input.GetAxis("Vertical");
+            jump = Input.GetButton("Jump");
+            dash = Input.GetKeyDown(KeyCode.LeftShift);
+            pause = Input.GetKey(KeyCode.Escape);
         }
+        if (pause)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        Move();
+    }
 
+
+    void Move()
+    {
+        if(runTime < autoRuntime && (Mathf.Abs(horizontal) == 1 || Mathf.Abs(vertical) == 1))
+        {
+            current_speed = speed;
+            runTime += Time.deltaTime;
+        }
+        else if(runTime >= autoRuntime)
+            current_speed = runningSpeed;
+        else if((Mathf.Abs(horizontal) != 1 || Mathf.Abs(vertical) != 1))
+            runTime = 0;
+        Debug.Log(runTime);
+        isground = Physics.CheckSphere(groundCheck.position, 0.5f, ground);
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
         if (direction.magnitude >= 0.1f && IsLocalPlayer)
         {
@@ -78,10 +94,9 @@ public class Player_Movement : NetworkBehaviour
 
             Vector3 movedir = Quaternion.Euler(0f, turn, 0f) * Vector3.forward;
             controller.Move(movedir.normalized * current_speed * Time.deltaTime);
-            //print(Mathf.Atan2(1, 0));
         }
 
-        if (Input.GetButton("Jump") && isground)
+        if (jump && isground)
         {
             velocity.y = Mathf.Sqrt(2 * -gravity * jumpHeight);
         }
@@ -93,6 +108,13 @@ public class Player_Movement : NetworkBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-
+        if(dash)
+            currentDashTime = 0f;
+        if(currentDashTime < maxDashTime){
+            currentDashTime += dashStopSpeed;
+            controller.Move(transform.forward * dashSpeed * Time.deltaTime);
+        }
     }
 }
+
+

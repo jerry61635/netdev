@@ -29,7 +29,6 @@ public class IntoArea : MonoBehaviour
     {
         if (spawn_enemy)
         {
-            Debug.Log("Player inside");
             Current_Spawn_time += Time.deltaTime;
             if (Current_Spawn_time >= SpawnRate) 
             {
@@ -42,18 +41,20 @@ public class IntoArea : MonoBehaviour
                 
             }
         }
-        Debug.Log(enemies.Count);
-        Debug.Log(spawn_enemy);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void LateUpdate()
+    {
+        spawn_enemy = false;
+    }
+    
+    void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             if (spawn_enemy)
             {
                 spawn_enemy = false;
-                Debug.Log("Player Out");
                 foreach (GameObject i in enemies){
                     Destroy(i);
                 }
