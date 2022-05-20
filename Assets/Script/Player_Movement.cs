@@ -5,43 +5,53 @@ using Unity.Netcode;
 
 public class Player_Movement : NetworkBehaviour
 {
+    #region Singleton
+        public static Player_Movement instance;
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
+        void Awake()
+        {
+            if(instance == null) instance = this;
+        }
+    #endregion
+
     public CharacterController controller;
 
-    float horizontal;
-    float vertical;
-    bool jump;
-    bool dash;
-    bool pause;
+    //Input
+    float horizontal;   //default WS
+    float vertical;     //AD
+    bool jump;          //"Space Bar"
+    bool dash;          //"Left Shift"
+    bool pause;         //"Esc"
+    public bool interact;      //E
 
+    //Moving reference
     float turnSmoothTime = 0.1f;
     float SmoothVelocity;
-
     [SerializeField]
     float jumpHeight = 5f;
-
     [SerializeField]
     float speed = 5f;
-
     [SerializeField]
     float runningSpeed = 8f;
     public float autoRuntime = 2f;
     float runTime = 0f;
     float current_speed;
-
     float currentDashTime;
     public float maxDashTime = 2;
     public float dashStopSpeed = 0.1f;
     public float dashSpeed = 100f;
     float dashCooldown;
-
-
     [SerializeField]
     float gravity = -9.8f;
     Vector3 velocity;
-
     bool isground;
     public Transform groundCheck;
     public LayerMask ground;
+
+    //Interact
+    Interact act;
 
     void Start()
     {
@@ -63,27 +73,31 @@ public class Player_Movement : NetworkBehaviour
             jump = Input.GetButton("Jump");
             dash = Input.GetKeyDown(KeyCode.LeftShift);
             pause = Input.GetKey(KeyCode.Escape);
+            interact = Input.GetKeyDown(KeyCode.E);
         }
         if (pause)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
-        Move();
+        CharacterMove();
     }
 
 
-    void Move()
+    void CharacterMove()
     {
         if(runTime < autoRuntime && (Mathf.Abs(horizontal) == 1 || Mathf.Abs(vertical) == 1))
         {
             current_speed = speed;
             runTime += Time.deltaTime;
         }
+        else if(runTime < autoRuntime)
+            current_speed = speed;
         else if(runTime >= autoRuntime)
             current_speed = runningSpeed;
         else if((Mathf.Abs(horizontal) != 1 || Mathf.Abs(vertical) != 1))
             runTime = 0;
+        
         isground = Physics.CheckSphere(groundCheck.position, 0.5f, ground);
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
         if (direction.magnitude >= 0.1f && IsLocalPlayer)
@@ -114,6 +128,7 @@ public class Player_Movement : NetworkBehaviour
             currentDashTime += dashStopSpeed;
             controller.Move(transform.forward * dashSpeed * Time.deltaTime);
         }
+        
     }
 }
 
