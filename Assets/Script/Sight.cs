@@ -25,19 +25,18 @@ public class Sight : MonoBehaviour
     void Start()
     {
         layerMask = 1 << 7;
-        print(layerMask);
+        //print(layerMask);
     }
 
     // Update is called once per frame
     void Update()
     {
         if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, hitDistance, layerMask)){
-            //Debug.Log("test");
             Vector3 forward = transform.TransformDirection(Vector3.forward) * hitDistance;
             Debug.DrawRay(transform.position, forward, Color.green);
             if(hit.transform.tag == "Interactable")
                 object_found = true;
-            else object_found = false;
         }
+        else object_found = false;
     }
 }
