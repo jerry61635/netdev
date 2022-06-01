@@ -2058,7 +2058,7 @@ MonoBehaviour:
   - {fileID: 1465886745}
   - {fileID: 1736033384}
   Enemies:
-  - {fileID: 6852985663620261184, guid: 5bf1cf15c585798429a084150ff65a66, type: 3}
+  - {fileID: 2410837570925618567, guid: 6cec9d64d7c3d5a418cbc9d9da41813f, type: 3}
   SpawnRate: 3
 --- !u!65 &1981290441
 BoxCollider:

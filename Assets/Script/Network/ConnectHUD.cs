@@ -35,6 +35,7 @@ public class ConnectHUD : MonoBehaviour
 
         m_Transport = (UnityTransport)m_NetworkManager.NetworkConfig.NetworkTransport;
 
+        Debug.Log(m_ConnectAddress);
         GUILayout.BeginArea(new Rect(DrawOffset, new Vector2(200, 200)));
 
         if (IsRunning(m_NetworkManager))

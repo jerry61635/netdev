@@ -162,13 +162,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 6870866369117880695}
+  interact: 0
   jumpHeight: 2
   speed: 5
   runningSpeed: 15
   autoRuntime: 0.5
   maxDashTime: 5
   dashStopSpeed: 0.1
-  dashSpeed: 100
+  dashSpeed: 50
   gravity: -19.6
   groundCheck: {fileID: 6870866369747370782}
   ground:

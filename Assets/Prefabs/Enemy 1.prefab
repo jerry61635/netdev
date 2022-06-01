@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 1000
-  nowHP: 0
+  nowHP: 1000
   hpImage: {fileID: 7777410603073249816}
 --- !u!1 &4674261330157854333
 GameObject:
