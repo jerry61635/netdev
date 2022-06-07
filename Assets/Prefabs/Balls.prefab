@@ -90,7 +90,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: cad74d23e9b29b54eb4fef02703ff8fd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -175,10 +175,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 4104371155615612612}
-  cam: {fileID: 0}
+  interact: 0
   jumpHeight: 2
   speed: 5
   runningSpeed: 15
+  autoRuntime: 2
+  maxDashTime: 2
+  dashStopSpeed: 0.1
+  dashSpeed: 100
   gravity: -19.6
   groundCheck: {fileID: 4104371153812372653}
   ground:
@@ -319,7 +323,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: cad74d23e9b29b54eb4fef02703ff8fd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
