@@ -86,7 +86,8 @@ public class Player_Movement : NetworkBehaviour
 
     void CharacterMove()
     {
-        if(runTime < autoRuntime && (Mathf.Abs(horizontal) == 1 || Mathf.Abs(vertical) == 1))
+        Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
+        if (runTime < autoRuntime && (Mathf.Abs(horizontal) == 1 || Mathf.Abs(vertical) == 1))
         {
             current_speed = speed;
             runTime += Time.deltaTime;
@@ -95,11 +96,9 @@ public class Player_Movement : NetworkBehaviour
             current_speed = speed;
         else if(runTime >= autoRuntime)
             current_speed = runningSpeed;
-        else if((Mathf.Abs(horizontal) != 1 || Mathf.Abs(vertical) != 1))
-            runTime = 0;
+        if (direction.x == 0 && direction.z == 0) runTime = 0;
         
         isground = Physics.CheckSphere(groundCheck.position, 0.5f, ground);
-        Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
         if (direction.magnitude >= 0.1f && IsLocalPlayer)
         {
             float turn = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + GameManager.Instance.Cam.transform.eulerAngles.y;

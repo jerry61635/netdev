@@ -22,8 +22,34 @@ public class IPManager
         #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
             NetworkInterfaceType _type1 = NetworkInterfaceType.Wireless80211;
             NetworkInterfaceType _type2 = NetworkInterfaceType.Ethernet;
+            NetworkInterfaceType _type3 = NetworkInterfaceType.Ppp;
 
-            if ((item.NetworkInterfaceType == _type1 || item.NetworkInterfaceType == _type2) && item.OperationalStatus == OperationalStatus.Up)
+            if (item.NetworkInterfaceType == _type3 && item.OperationalStatus == OperationalStatus.Up)
+            {
+                foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
+                {
+                    Debug.Log(ip.Address);
+                    //IPv4
+                    if (Addfam == ADDRESSFAM.IPv4)
+                    {
+                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                        {
+                            output = ip.Address.ToString();
+                        }
+                    }
+
+                    //IPv6
+                    else if (Addfam == ADDRESSFAM.IPv6)
+                    {
+                        if (ip.Address.AddressFamily == AddressFamily.InterNetworkV6)
+                        {
+                            output = ip.Address.ToString();
+                        }
+                    }
+                }
+                break;
+            }
+            else if ((item.NetworkInterfaceType == _type1 || item.NetworkInterfaceType == _type2) && item.OperationalStatus == OperationalStatus.Up)
         #endif 
             {
                 foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)

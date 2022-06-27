@@ -24,6 +24,7 @@ public class ConnectHUD : MonoBehaviour
 
     void Awake()
     {
+        //Debug.Log("Current IP: " + m_ConnectAddress);
         // Only cache networking manager but not transport here because transport could change anytime.
         m_NetworkManager = GetComponent<NetworkManager>();
         m_LabelTextStyle = new GUIStyle(GUIStyle.none);
@@ -35,7 +36,6 @@ public class ConnectHUD : MonoBehaviour
 
         m_Transport = (UnityTransport)m_NetworkManager.NetworkConfig.NetworkTransport;
 
-        Debug.Log(m_ConnectAddress);
         GUILayout.BeginArea(new Rect(DrawOffset, new Vector2(200, 200)));
 
         if (IsRunning(m_NetworkManager))
