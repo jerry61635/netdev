@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     //public event System.Action<Player_Movement> OnLocalPlayerJoin;
     //private GameObject gameObject;
 
-    public Transform Cam;
+    public Camera Cam;
     public Cinemachine.CinemachineFreeLook FreeLook;
 
     private static GameManager m_Instance;

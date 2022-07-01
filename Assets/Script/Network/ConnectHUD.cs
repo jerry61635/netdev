@@ -12,11 +12,13 @@ public class ConnectHUD : MonoBehaviour
 
     UnityTransport m_Transport;
 
+
     GUIStyle m_LabelTextStyle;
 
     // This is needed to make the port field more convenient. GUILayout.TextField is very limited and we want to be able to clear the field entirely so we can't cache this as ushort.
     string m_PortString = "7777";
     string m_ConnectAddress = IPManager.GetIP(ADDRESSFAM.IPv4);
+    public static string PlayerName = "Steve";
 
     public Vector2 DrawOffset = new Vector2(10, 10);
 
@@ -73,6 +75,15 @@ public class ConnectHUD : MonoBehaviour
         }
 
         GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Player Name", m_LabelTextStyle);
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        PlayerName = GUILayout.TextField(PlayerName);
+        GUILayout.EndHorizontal();
+
 
         if (GUILayout.Button("Host (Server + Client)"))
         {
