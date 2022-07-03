@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class GameManager : MonoBehaviour
 
     public Camera Cam;
     public Cinemachine.CinemachineFreeLook FreeLook;
+    public GameObject chatPanel, textObject;
+    public InputField chatBox;
+    public CanvasGroup chatCanvasGroup;
 
     private static GameManager m_Instance;
     public static GameManager Instance;

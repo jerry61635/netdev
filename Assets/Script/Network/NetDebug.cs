@@ -5,6 +5,7 @@ using Unity.Netcode;
 
 public class NetDebug : NetworkBehaviour
 {
+    public NetworkObject PlayerNetwokObject;
     public bool server;
     public bool owner;
     public bool client;
@@ -13,7 +14,7 @@ public class NetDebug : NetworkBehaviour
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -33,5 +34,6 @@ public class NetDebug : NetworkBehaviour
 
         if (IsHost) host = true;
         else host = false;
+
     }
 }

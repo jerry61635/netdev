@@ -17,6 +17,7 @@ public class Player_Movement : NetworkBehaviour
     #endregion
 
     public CharacterController controller;
+    public NetworkObject netObject;
 
     //Input
     float horizontal;   //default WS
@@ -66,7 +67,7 @@ public class Player_Movement : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(IsClient)
+        if(IsClient && !UIFade.chatFocus)
         {
             horizontal = Input.GetAxis("Horizontal");
             vertical = Input.GetAxis("Vertical");

@@ -4,19 +4,13 @@ using UnityEngine;
 
 public class PlayerState :MonoBehaviour
 {
-    #region Singleton
-    public static PlayerState instance;
+    
+    public static string name_p;
+    public float health = 100;
     void Awake()
     {
-        if (instance == null) instance = this;
+        name_p = ConnectHUD.PlayerName;
     }
-    #endregion
 
-    public string name;
-    public float health = 100;
-    
-    void Start()
-    {
-        name = ConnectHUD.PlayerName;
-    }
+
 }

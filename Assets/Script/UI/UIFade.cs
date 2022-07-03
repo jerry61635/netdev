@@ -14,21 +14,27 @@ public class UIFade : NetworkBehaviour
     [SerializeField]
     List<Message> messageList = new List<Message>();
 
-    [SerializeField] CanvasGroup UIGroup;
+    public static bool chatFocus;
+
 
     void Awake()
     {
         HideUI();
+        chatPanel = GameManager.Instance.chatPanel;
+        textObject = GameManager.Instance.textObject;
+        chatBox = GameManager.Instance.chatBox;
     }
 
     private void Update()
     {
-        //if (IsClient) Debug.Log("Is Client!");
+        if (chatBox.isFocused) chatFocus = true;
+        else chatFocus = false;
+
         if (chatBox.text != "")
         {
             if (Input.GetKeyDown(KeyCode.Return) && IsClient)
             {
-                if (IsServer) SendMessageToChatClientRpc(chatBox.text);
+                if (IsServer) SendMessageToChatClientRpc(PlayerState.name_p + ": " + chatBox.text);
                 else SendMessageToChatServerRpc(chatBox.text);
                 chatBox.text = "";
             }
@@ -44,14 +50,13 @@ public class UIFade : NetworkBehaviour
 
         if (!chatBox.isFocused)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
-                SendMessageToChatClientRpc("Q pressed");
+            //annoucement....
         }
         else if(chatBox.isFocused) UIHideTime = 3;
 
         if (UIHideTime <= 1)
         {
-            UIGroup.alpha -= Time.deltaTime;
+            GameManager.Instance.chatCanvasGroup.alpha -= Time.deltaTime;
         }
         else if (UIHideTime > 1)
         {
@@ -62,12 +67,12 @@ public class UIFade : NetworkBehaviour
     }
     public void ShowUI()
     {
-        UIGroup.alpha = 1;
+        GameManager.Instance.chatCanvasGroup.alpha = 1;
     }
 
     public void HideUI()
     {
-        UIGroup.alpha = 0;
+        GameManager.Instance.chatCanvasGroup.alpha = 0;
     }
 
     [ServerRpc(RequireOwnership = false)]

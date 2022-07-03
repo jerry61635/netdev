@@ -378,6 +378,72 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &208270376
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 208270378}
+  - component: {fileID: 208270377}
+  - component: {fileID: 208270379}
+  m_Layer: 0
+  m_Name: Test Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &208270377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208270376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a87996fce0d718a43b505810174e8353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerNetwokObject: {fileID: 0}
+  server: 0
+  owner: 0
+  client: 0
+  local: 0
+  host: 0
+--- !u!4 &208270378
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208270376}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 332.5, y: 317, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &208270379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208270376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 473356056
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &253896917
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,8 +526,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 253896920}
   m_HandleRect: {fileID: 1665718497}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 1
+  m_Value: -0.42105263
+  m_Size: 0.99997824
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -912,7 +978,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 379852568}
   m_HandleRect: {fileID: 1069150316}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1265,7 +1331,7 @@ MonoBehaviour:
     TimeResyncInterval: 30
     EnsureNetworkVariableLengthSafety: 0
     EnableSceneManagement: 1
-    ForceSamePrefabs: 1
+    ForceSamePrefabs: 0
     RecycleNetworkIds: 1
     NetworkIdRecycleDelay: 120
     RpcHashSize: 0
@@ -1327,8 +1393,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819bef1d0b28648ee85bb884a219f294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cam: {fileID: 963194228}
+  Cam: {fileID: 963194227}
   FreeLook: {fileID: 685441453}
+  chatPanel: {fileID: 1812461899}
+  textObject: {fileID: 2340986187309005578, guid: 224d3133cfed4b84d940b4518b9143c8, type: 3}
+  chatBox: {fileID: 5100365}
+  chatCanvasGroup: {fileID: 950609646}
 --- !u!4 &475350317
 Transform:
   m_ObjectHideFlags: 0
@@ -1724,7 +1794,6 @@ GameObject:
   - component: {fileID: 764389217}
   - component: {fileID: 764389220}
   - component: {fileID: 764389218}
-  - component: {fileID: 764389219}
   m_Layer: 0
   m_Name: Chat
   m_TagString: Untagged
@@ -1763,33 +1832,6 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &764389219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 764389216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 1
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
-  PositionThreshold: 0.001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  InLocalSpace: 0
-  Interpolate: 1
-  CanCommitToTransform: 0
 --- !u!114 &764389220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1797,7 +1839,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 764389216}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e7bd9f40f728eab4cb392cf0cefaa592, type: 3}
   m_Name: 
@@ -1808,7 +1850,6 @@ MonoBehaviour:
   maxMessages: 25
   UIHideTime: 0
   messageList: []
-  UIGroup: {fileID: 950609646}
 --- !u!1 &769892560
 GameObject:
   m_ObjectHideFlags: 0
@@ -3121,7 +3162,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -0.0009139854, y: 0.0072631836}
+  m_AnchoredPosition: {x: 0.002319336, y: 0.0060424805}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1812461901
@@ -3202,7 +3243,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 131, y: 134}
+  m_AnchoredPosition: {x: -535, y: -500}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1880716938
